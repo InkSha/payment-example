@@ -34,7 +34,7 @@ window.onload = () => {
      * @returns 订单 id
      */
     async createOrder() {
-      return fetch("/api/v1/payment/create/order", {
+      return fetch("/api/v1/paypal/create/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -53,7 +53,7 @@ window.onload = () => {
      * @returns
      */
     async onApprove(data, action) {
-      return fetch(`/api/v1/payment/capture/order`, {
+      return fetch(`/api/v1/paypal/capture/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

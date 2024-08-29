@@ -1,15 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { PaymentService } from './payment.service'
+import { PaypalService } from './paypal.service'
 import { CreateOrderDTO } from './dto/create-order.dto'
 import { CaptureOrderDTO } from './dto/capture-order.dto'
 import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 import { OrderResponseExample } from './dto/payment'
 
-@ApiTags('支付')
-@Controller("payment")
-export class PaymentController {
+@ApiTags('支付', 'paypal')
+@Controller("paypal")
+export class PaypalController {
   constructor(
-    private readonly service: PaymentService
+    private readonly service: PaypalService
   ) {}
 
   @ApiBody({

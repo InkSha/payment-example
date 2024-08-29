@@ -4,7 +4,7 @@ import axios, { type Axios } from 'axios'
 import { OrderResponse } from './dto/payment'
 
 @Injectable()
-export class PaymentService {
+export class PaypalService {
 
   private readonly fetch: Axios
 
