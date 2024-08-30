@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   app.setGlobalPrefix(process.env.API_PREFIX, {
-    exclude: ['']
+    exclude: ['paypal', 'asiabill']
   })
 
   app.enableCors({

@@ -10,9 +10,9 @@ export class AppController {
     private readonly config: ConfigService
   ) {}
 
-  @Get()
+  @Get('paypal')
   @Render('paypal')
-  home() {
+  paypal() {
 
     /**
      * 除了第三方脚本外
@@ -24,5 +24,19 @@ export class AppController {
     const script = `https://www.paypal.com/sdk/js?client-id=${this.config.get("PAYPAL_SHOP_CLIENT_ID")}&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo`
 
     return { script }
+  }
+
+  @Get('asiabill')
+  @Render('asiabill')
+  asiabill() {
+
+    /**
+     * 引入 js sdk
+     */
+    const script = `${this.config.get('ASIABILL_PAYMENT_API_URL')}/static/v3/js/AsiabillPayment.min.js`
+
+    return {
+      script
+    }
   }
 }

@@ -4,6 +4,7 @@ import { APP_PIPE } from '@nestjs/core'
 import { ScheduleModule } from '@nestjs/schedule'
 import { AppController } from './app.controller'
 import { PaypalModule } from './modules/paypal/paypal.module'
+import { AsiabillModule } from '@/modules/asiabill/asiabill.module'
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { PaypalModule } from './modules/paypal/paypal.module'
       envFilePath: ['.env']
     }),
     ScheduleModule.forRoot(),
-    PaypalModule
+    PaypalModule,
+    AsiabillModule
   ],
   controllers: [AppController],
   providers: [
