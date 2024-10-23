@@ -49,6 +49,7 @@ export class PaypalService {
    */
   public async createOrder(cart: Record<string, string | number>[]) {
     const accessToken = await this.generateAccessToken()
+    const total = cart.reduce(((prev, cur) => prev + ((cur.unit_amount as number) * (cur.quantity as number))), 0)
 
     return this.fetch.post('/v2/checkout/orders', {
       //
@@ -58,18 +59,33 @@ export class PaypalService {
           amount: {
             currency_code: "USD",
             // 总金额
-            value: cart.reduce(((prev, cur) => prev + ((cur.unit_amount as number) * (cur.quantity as number))), 0),
+            value: total,
             description: "购买描述",
             // ! 商品列表 必须有商品数量和名字和价格
             items: cart,
           }
         },
-      ]
+      ],
+      //
+      // ? https://developer.paypal.com/docs/api/orders/v2/#orders_create!path=payment_source&t=request
+      //
+      payment_source: {
+        paypal: {
+          experience_context: {
+            shipping_preference: "NO_SHIPPING",
+            user_action: "PAY_NOW",
+            return_url: `http://localhost:${this.config.get('PORT')}?status=success&total=${total}&order=${+(new Date())}`,
+            cancel_url: `http://localhost:${this.config.get('PORT')}?status=failure&total=${total}&order=${+(new Date())}`,
+          }
+        }
+      },
     }, {
       headers: {
         'Content-Type': "application/json",
         Authorization: `Bearer ${accessToken}`
-        // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+        //
+        // ? https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+        //
         // "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
         // "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
         // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'

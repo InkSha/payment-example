@@ -4,14 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome</title>
-  <style></style>
+  <style>
+    #app {
+      width: 100%;
+      display: flex;
+      flex-flow: nowrap column;
+      justify-content: flex-start;
+      align-items: center;
+
+      #out-paypal {
+        margin: 2rem 0;
+        padding: 1rem 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
     <script src={{script}} ></script/>
     <script src="paypal-example.js"></script>
     <div id="app">
       <div id="paypal-button-container"></div>
+      <button id='out-paypal'>跳转外部支付</button>
+      <span id='text'>文本</span>
     </div>
-    <span id='text'>文本</span>
 </body>
 </html>
