@@ -19,6 +19,12 @@ window.onload = () => {
     }
   ]
 
+  const text = document.getElementById('text')
+
+  function setText(message = '') {
+    text.innerText = message
+  }
+
   window.paypal.Buttons({
     style: {
       shape: 'rect',
@@ -34,6 +40,9 @@ window.onload = () => {
      * @returns 订单 id
      */
     async createOrder() {
+
+      setText('创建订单')
+
       return fetch("/api/v1/paypal/create/order", {
         method: "POST",
         headers: {
@@ -53,6 +62,9 @@ window.onload = () => {
      * @returns
      */
     async onApprove(data, action) {
+
+      setText('核准订单')
+
       return fetch(`/api/v1/paypal/capture/order`, {
         method: "POST",
         headers: {
@@ -80,6 +92,7 @@ window.onload = () => {
             throw new Error(JSON.stringify(error))
           } else {
             console.log({ order })
+            setText('订单完成:\n'+JSON.stringify(order))
           }
         })
     }
